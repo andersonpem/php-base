@@ -51,6 +51,5 @@ jobs:
           push: true
           tags: |
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
-            ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}
           build-args: |
             PHP_VERSION=${{ env.DOCKER_TAG }}
