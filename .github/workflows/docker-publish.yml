@@ -53,4 +53,4 @@ jobs:
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
             ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.MAJOR_VERSION }}
           build-args: |
-            PHP_VERSION=$(echo ${{ env.DOCKER_TAG }} | cut -d'-' -f1)  # Extract the PHP version from the tag
+            PHP_VERSION=${{ env.DOCKER_TAG }}
