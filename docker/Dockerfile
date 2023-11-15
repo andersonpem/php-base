@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM --platform=$TARGETPLATFORM php:${PHP_VERSION}
+FROM --platform=$TARGETPLATFORM php:${PHP_VERSION}-fpm
 
 # Install dependencies for building PHP extensions
 RUN apt-get update && apt-get install -y \
