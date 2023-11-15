@@ -1,6 +1,4 @@
 ARG PHP_VERSION
-ENV PHP_VERSION=$PHP_VERSION
-
 FROM --platform=$TARGETPLATFORM php:${PHP_VERSION}
 
 # Install dependencies for building PHP extensions
