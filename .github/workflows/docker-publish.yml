@@ -7,10 +7,9 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: php8.2-base
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PAT: ${{ secrets.DOCKER_PAT }}
-
+  IMAGE_NAME: php-base
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
@@ -18,14 +17,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Validate SemVer tag
-        run: |
-          TAG=${GITHUB_REF#refs/tags/}
-          if [[ ! "${TAG}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "The tag ${TAG} is not a valid Semantic Version. Exiting."
-            exit 1
-          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -43,13 +34,24 @@ jobs:
           echo "DOCKER_TAG=$FULL_TAG" >> $GITHUB_ENV
           echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
 
-      - name: Build and push
+      - name: Build and push v8.2
         uses: docker/build-push-action@v5
         with:
           context: docker
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_TAG }}
+            ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:8.2
           build-args: |
-            PHP_VERSION=${{ env.DOCKER_TAG }}
+            PHP_VERSION=8.2
+
+      - name: Build and push v8.3
+        uses: docker/build-push-action@v5
+        with:
+          context: docker
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:8.3
+          build-args: |
+            PHP_VERSION=8.2
