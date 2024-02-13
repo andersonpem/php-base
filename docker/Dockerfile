@@ -1,6 +1,8 @@
 ARG PHP_VERSION
 FROM --platform=$TARGETPLATFORM php:${PHP_VERSION}-fpm${IMAGE_VARIANT}
 
+COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
+
 # Install dependencies
 RUN apt update -y && apt install -y \
     unzip \
@@ -12,8 +14,6 @@ RUN apt update -y && apt install -y \
 
 RUN pecl install ssh2-1.3.1
 RUN pecl install redis
-
-COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 RUN docker-php-ext-install pdo_mysql \
     && docker-php-ext-install opcache \
