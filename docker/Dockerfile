@@ -1,14 +1,14 @@
 ARG PHP_VERSION
-FROM --platform=$TARGETPLATFORM php:${PHP_VERSION}-fpm-bookworm
+FROM --platform=$TARGETPLATFORM php:${PHP_VERSION}-fpm${IMAGE_VARIANT}
 
 # Install dependencies
-RUN apt update -y \
-    && apt install unzip \
-     libicu-dev \
-     libzip-dev \
-     git \
-     libssh2-1-dev \
-     libssh2-1 -y
+RUN apt update -y && apt install -y \
+    unzip \
+    libicu-dev \
+    libzip-dev \
+    git \
+    libssh2-1-dev \
+    libssh2-1
 
 RUN pecl install ssh2-1.3.1
 RUN pecl install redis
