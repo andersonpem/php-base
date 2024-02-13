@@ -1,4 +1,4 @@
-name: Build and Publish Docker Image
+name: Build and Publish php 8.2.5
 
 on:
   push:
